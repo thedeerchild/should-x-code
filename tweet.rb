@@ -19,7 +19,7 @@ end
 
 redis_client = Redis.new(url: ENV['REDIS_URL'])
 
-if Random.rand(100) < 10 # Only tweet 1 time in 10
+if Random.rand(4) < 1 # Tweet 1 time in 4
   if Random.rand(100) < 5 # Tweet at a follower 5% of the time
     follower = Followers.new(twitter_client, redis_client).get_follower
     TweetSender.new(twitter_client).tweet follower unless follower.nil?
