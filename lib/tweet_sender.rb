@@ -14,13 +14,17 @@ class TweetSender
     send_tweet(format_tweet(job_data))
   end
 
+  def format_tweet job_data
+    "#{job_line(job_data)}#{cta_line}"
+  end
+
 private
 
   def send_tweet message
     @client.update message
   end
 
-  def format_tweet job_data
+  def job_line job_data
     def self.indef_article word
       # No "U" because the most common are UX and UI
       article = (%w(a e i o).include? word[0].downcase) ? 'an' : 'a'
@@ -35,5 +39,16 @@ private
     else
       "Should #{indef_article(title)} code?"
     end
+  end
+
+  def cta_line
+    lines = [
+      ' Reply with your answer.',
+      ' Fav for yes; RT for no.',
+      ' RT for yes; fav for no.',
+      '', '', '', '', '', '' # 1 in 3 chance of CTA line
+    ]
+
+    lines.sample
   end
 end
