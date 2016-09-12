@@ -20,6 +20,7 @@ private
   def job_line job_data
     def self.indef_article word
       return word if word[0] == '@'
+
       # No "U" because the most common are UX and UI
       article = (%w(a e i o).include? word[0].downcase) ? 'an' : 'a'
       "#{article} #{word}"
