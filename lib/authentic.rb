@@ -1,9 +1,8 @@
-require 'redis'
 require 'rest-client'
 
 class Authentic
-  def initialize 
-    @redis = Redis.new(url: ENV['REDIS_URL'])
+  def initialize redis_client
+    @redis = redis_client
   end
 
   def get_job

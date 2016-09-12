@@ -1,13 +1,6 @@
-require 'twitter'
-
 class TweetSender
-  def initialize
-    @client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
-      config.consumer_secret     = ENV['TWITTER_CONSUMER_SECRET']
-      config.access_token        = ENV['TWITTER_ACCESS_TOKEN']
-      config.access_token_secret = ENV['TWITTER_ACCESS_SECRET']
-    end
+  def initialize twitter_client
+    @twitter = twitter_client
   end
 
   def tweet job_data
@@ -21,11 +14,12 @@ class TweetSender
 private
 
   def send_tweet message
-    @client.update message
+    @twitter.update message
   end
 
   def job_line job_data
     def self.indef_article word
+      return word if word[0] == '@'
       # No "U" because the most common are UX and UI
       article = (%w(a e i o).include? word[0].downcase) ? 'an' : 'a'
       "#{article} #{word}"
